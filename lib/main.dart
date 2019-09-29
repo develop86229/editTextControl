@@ -30,15 +30,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -49,22 +40,82 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   TextEditingController myTextController = TextEditingController();
   var rnd = new Random();
+  String textBufferWstanka;
+  String backTextController;
+  FocusNode focusNode = new FocusNode();
+  Widget wstanka;
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
+  void initState() {
+    wstanka = EditableText(
+      focusNode: focusNode,
+      controller: myTextController,
+      cursorColor: Colors.amberAccent,
+      backgroundCursorColor: Colors.yellowAccent,
+      style: TextStyle(
+        color: Colors.black,
+        backgroundColor: Colors.grey,
+      ),
+      onEditingComplete:
+      _deleteWstanka(),
+      onChanged: (text) {
+        print('1.parameter text:$text');
+        print('2.parameter contriller.text:' + myTextController.text);
+        myTextController.text = text;
+        print('3.parameter contriller.text AFTER:' + myTextController.text);
+        backTextController = myTextController.text;
+        print('3.backTextController:' + backTextController);
+      },
+    );
+
+    //    myTextController.addListener(() {
+    //      print("what you see");
+    //    });
+  }
+
+  @override
   void dispose() {
     myTextController.dispose();
+    super.dispose();
   }
+
+    _deleteWstanka() {
+      setState(() {
+        wstanka = Container();
+        print('9.pwstanka become a container:');
+      });
+
+    _vankaWstanka() {
+      setState(() {
+        wstanka = EditableText(
+        focusNode: focusNode,
+        controller: myTextController,
+        cursorColor: Colors.amberAccent,
+        backgroundCursorColor: Colors.yellowAccent,
+        style: TextStyle(
+          color: Colors.black,
+          backgroundColor: Colors.grey,
+        ),
+        onEditingComplete:
+        _deleteWstanka(),
+        onChanged: (text) {
+          print('1.parameter text:$text');
+          print('2.parameter contriller.text:' + myTextController.text);
+          myTextController.text = text;
+          print('3.parameter contriller.text AFTER:' + myTextController.text);
+          backTextController = myTextController.text;
+          print('3.backTextController:' + backTextController);
+        },
+      );
+        print('9.pwstanka become a container:');
+      });
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -100,9 +151,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            TextField(
-              controller: myTextController,
-            ),
+//            TextField(Text:'kj'),
+//            TextField(
+            wstanka,
+
             Text(
               'You have pushed the button this many times:',
             ),
@@ -116,11 +168,11 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed:
 //        _incrementCounter,
-
             () {
-          setState(() {
-            myTextController.text = rnd.nextInt(1000000000).toString();
-          });
+          _vankaWstanka();
+//          setState(() {
+//            myTextController.text = rnd.nextInt(1000000000).toString();
+//          });
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
