@@ -35,15 +35,22 @@ class _MyHomePageState extends State<MyHomePage> {
   FocusNode focusNode = new FocusNode();
   Widget wstanka;
 
+  Widget originalContent ;
+
+
   @override
   void initState() {
-    wstanka = TextField(
+
+    Widget defaultTextWidget = TextField(
       focusNode: focusNode,
       controller: myTextController,
       onChanged: (text) {
         backTextController =  myTextController.text;
       },
     );
+
+    wstanka = defaultTextWidget;
+
     super.initState();
   }
 
@@ -64,16 +71,16 @@ class _MyHomePageState extends State<MyHomePage> {
   _vankaWstanka() {
     myTextController = TextEditingController();
     print(backTextController);
-//    myTextController.text = backTextController;
 
     setState(() {
       wstanka = TextField(
         focusNode: focusNode,
         controller: myTextController,
         onChanged: (text) {
-//          backTextController = myTextController.text;
+          backTextController =  myTextController.text;
         },
       );
+      myTextController.text = backTextController;
     });
   }
 
