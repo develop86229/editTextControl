@@ -41,9 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
       focusNode: focusNode,
       controller: myTextController,
       onChanged: (text) {
-        backTextController = myTextController.text;
+        backTextController =  myTextController.text;
       },
-
     );
     super.initState();
   }
